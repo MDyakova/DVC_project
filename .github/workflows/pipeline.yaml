@@ -15,4 +15,8 @@ jobs:
           # Add figure to the report
           echo "## Cross-validating results"
           cml-publish confusion_matrix.png --md >> report.md
+          echo "## Testing results"
+          cml-publish test_confusion_matrix.png --md >> report.md
+          echo "## FI"
+          cml-publish feature_importance.png --md >> report.md
           cml-send-comment report.md
