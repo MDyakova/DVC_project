@@ -1,0 +1,31 @@
+stages:
+  preprocessing:
+    cmd: python3 preprocessing.py
+    deps:
+    - preprocessing.py
+    outs:
+    - train_data.csv
+    - test_data.csv
+  train:
+    cmd: python3 train.py
+    deps:
+    - train.py
+    - train_data.csv
+    outs:
+    - confusion_matrix.png
+    - model.pkl
+    metrics:
+    - metrics.json:
+        cache: false
+
+  test:
+    cmd: python3 test.py
+    deps:
+    - test.py
+    - test_data.csv
+    - model.pkl
+    outs:
+    - test_confusion_matrix.png
+    metrics:
+    - test_metrics.json:
+        cache: false
