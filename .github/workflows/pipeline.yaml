@@ -11,16 +11,14 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git fetch --prune
-          dvc metrics show > report.md
+          dvc metrics show >> report.md
           # Add figure to the report
-          echo "## Cross-validating results"
+          echo "## Cross-validating results"  >> report.md
           cml-publish confusion_matrix.png --md >> report.md
-          echo "## Testing results"
+          echo "## Testing results"  >> report.md
           cml-publish test_confusion_matrix.png --md >> report.md
-          echo "## FI"
+          echo "## FI"  >> report.md
           cml-publish feature_importance.png --md >> report.md
-
-          echo "## Data features" > report.md
+          echo "## Data features" >> report.md
           cat columns.txt >> report.md
-
           cml-send-comment report.md
