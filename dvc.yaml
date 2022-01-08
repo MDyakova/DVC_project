@@ -1,8 +1,6 @@
 stages:
-  get_data:
-    cmd: dvc pull heart.csv
   preprocessing:
-    cmd: python3 preprocessing.py
+    cmd: python preprocessing.py
     deps:
     - heart.csv
     - preprocessing.py
@@ -10,7 +8,7 @@ stages:
     - train_data.csv
     - test_data.csv
   train:
-    cmd: python3 train.py
+    cmd: python train.py
     deps:
     - train.py
     - train_data.csv
@@ -22,7 +20,7 @@ stages:
         cache: false
 
   test:
-    cmd: python3 test.py
+    cmd: python test.py
     deps:
     - test.py
     - test_data.csv
@@ -32,3 +30,12 @@ stages:
     metrics:
     - test_metrics.json:
         cache: false
+
+  feature_importance:
+    cmd: python feature_importance.py
+    deps:
+    - feature_importance.py
+    - test_data.csv
+    - model.pkl
+    outs:
+    - feature_importance.png
