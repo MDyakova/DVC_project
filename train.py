@@ -26,7 +26,7 @@ xgb_model = XGBClassifier(
     base_score=0.5,
     colsample_bylevel=1,
     colsample_bytree=1,
-    learning_rate=0.1,
+    learning_rate=0.05,
     max_depth=5,
     n_estimators=30,
 )
