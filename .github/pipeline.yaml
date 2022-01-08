@@ -1,0 +1,40 @@
+name: DVC2
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install -r requirements.txt
+          dvc repro 
+          git fetch --prune
+
+          # launch models
+          python preprocessing.py
+          python train.py
+          python test.py
+          python feature_importance.py
+
+          dvc metrics diff --show-md main > report.md
+          # Add figure to the report
+          echo "## Cross validation results"
+          cml-publish confusion_matrix.png --md >> report.md
+
+          # Add test information
+          dvc test_metrics diff --show-md main > report.md
+          # Add figure to the report
+          echo "## Testing results"
+          cml-publish test_confusion_matrix.png --md >> report.md
+
+          # Add FI information
+          echo "## feature importance"
+          cml-publish feature_importance.png --md >> report.md
+          echo "## columns"
+          dvc columns diff --show-md main > report.md
+          
+          cml-send-comment report.md
