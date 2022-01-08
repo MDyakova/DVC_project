@@ -128,3 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /heart.csv
+/train_data.csv
+/test_data.csv
+/confusion_matrix.png
+/model.pkl
+/test_confusion_matrix.png
+/feature_importance.png
