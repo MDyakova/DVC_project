@@ -1,8 +1,6 @@
 stages:
   get_data:
     cmd: dvc pull heart.csv
-    outs: 
-    - heart.csv
   preprocessing:
     cmd: python3 preprocessing.py
     deps:
