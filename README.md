@@ -15,3 +15,4 @@
 # get data
 1. git clone this repo
 2. dvc pull heart.csv
+3. 
